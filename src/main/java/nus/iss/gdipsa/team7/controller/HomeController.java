@@ -26,22 +26,21 @@ public class HomeController {
 	
 	@PostMapping(value = "/authenticate")
 	public String handleLogin(@ModelAttribute("account") Account accForm, BindingResult bindingResult, Model model, HttpSession sessionObj) {
-		if(bindingResult.hasErrors()) {
-			return "login";
-		}
-		
-		Account acc = accService.authenticate(accForm.getUsername(), accForm.getPassword());	
-		
-		if (acc != null && acc.getRoles().contains(Role.Administrator)) {
+	    if (bindingResult.hasErrors()) {
+	        return "login";
+	    }
+
+	    Account acc = accService.authenticate(accForm.getUsername(), accForm.getPassword());
+
+	    if (acc != null && acc.getRoles().contains(Role.Administrator)) {
 	        sessionObj.setAttribute("username", accForm.getUsername());
 	        return "redirect:/admin_home";
 	    } else if (acc != null && acc.getRoles().contains(Role.Developer)) {
-	    	sessionObj.setAttribute("username", accForm.getUsername());
+	        sessionObj.setAttribute("username", accForm.getUsername());
 	        return "redirect:/developer_home";
 	    } else {
 	        model.addAttribute("errorMsg", "Invalid Username or Password. Please try again.");
 	        return "login";
 	    }
-
-}
+	}
 }

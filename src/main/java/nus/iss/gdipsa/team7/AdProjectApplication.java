@@ -23,6 +23,7 @@ public class AdProjectApplication {
 	CommandLineRunner loadData(AccountRepository accRepo)
 	{
 		return args -> {
+			
 			List<Role> adminRole = new ArrayList<>();
 	        adminRole.add(Role.Administrator);
 	        
