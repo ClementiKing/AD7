@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">LOGO</div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/game-list}">Game List</a></li>
+            <li><a th:href="@{/account-list}">Account List</a></li>
+        </ul>
+    </nav>
+    <div class="admin-profile">
+        <span>Welcome back, <span th:text="${sessionObj.username}">User</span>!</span>
+        <span th:text="${#dates.format(admin.lastLoginDate, 'MMM dd, yyyy')}">Jan 25, 2024</span>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="stats">
+        <div class="stat-item">
+            <h2>Total gamers and developers</h2>
+            <p><span th:text="${totalGamers}">2,267</span> Gamers</p>
+            <p><span th:text="${totalDevelopers}">16</span> Developers</p>
+        </div>
+
+        <div class="stat-item">
+            <h2>Total games</h2>
+            <p><span th:text="${totalGames}">7,539</span> games</p>
+        </div>
+
+        <div class="stat-item">
+            <h2>Number of Games Pending Review</h2>
+            <p><span th:text="${gamesPendingReview}">279</span> Games</p>
+        </div>
+
+        <div class="stat-item">
+            <h2>User Reports</h2>
+            <p><span th:text="${userReports}">53</span> events</p>
+        </div>
+    </div>
+</div>
+
+<!-- Add your scripts here -->
+
+</body>
+</html>

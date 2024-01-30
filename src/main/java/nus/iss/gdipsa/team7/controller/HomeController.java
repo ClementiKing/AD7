@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpSession;
 import nus.iss.gdipsa.team7.model.Account;
+import nus.iss.gdipsa.team7.model.Role;
 import nus.iss.gdipsa.team7.service.AccountService;
 
 @Controller
@@ -31,16 +32,16 @@ public class HomeController {
 		
 		Account acc = accService.authenticate(accForm.getUsername(), accForm.getPassword());	
 		
-		if(acc.getRoles().contains("Administrator")) {
-			return "admin_home";
-		}
-		
-		if(acc.getRoles().contains("Developer")) {
-			return "developer_home";
-		}
-		
-		model.addAttribute("errorMsg", "Invalid Username or Password. Please try again.");
-		return "login";
-	}
+		if (acc != null && acc.getRoles().contains(Role.Administrator)) {
+	        sessionObj.setAttribute("username", accForm.getUsername());
+	        return "redirect:/admin_home";
+	    } else if (acc != null && acc.getRoles().contains(Role.Developer)) {
+	    	sessionObj.setAttribute("username", accForm.getUsername());
+	        return "redirect:/developer_home";
+	    } else {
+	        model.addAttribute("errorMsg", "Invalid Username or Password. Please try again.");
+	        return "login";
+	    }
 
+}
 }
