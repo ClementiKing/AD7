@@ -1,43 +1,60 @@
 package nus.iss.gdipsa.team7.service;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nus.iss.gdipsa.team7.model.Role;
 import nus.iss.gdipsa.team7.repository.AccountRepository;
+import nus.iss.gdipsa.team7.repository.BanRequestRepository;
+import nus.iss.gdipsa.team7.repository.GamePostRepository;
+import nus.iss.gdipsa.team7.repository.GameRepository;
 
 @Service
 public class DashboardServiceImpl implements DashboardService{
 
 	@Autowired
-	AccountRepository accRepo;
+	private AccountRepository accRepo;
+	
+	@Autowired
+	private GameRepository gameRepo;
+	
+	@Autowired
+	private GamePostRepository gamePostRepo;
+	
+	@Autowired
+	private BanRequestRepository banRequestRepo;
+	
 	@Override
 	public long getTotalGamers() {
-		// TODO Auto-generated method stub
-		return accRepo.count();
+		List<Role> roles = Arrays.asList(Role.User);
+		long count = accRepo.countByRole(roles);
+		return count;
 	}
 
 	@Override
-	public int getTotalDevelopers() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getTotalDevelopers() {
+		List<Role> roles = Arrays.asList(Role.Developer);
+		long count = accRepo.countByRole(roles);
+		return count;
 	}
 
 	@Override
-	public int getTotalGames() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getTotalGames() {
+		return gameRepo.count();
 	}
 
 	@Override
-	public int getGamesPendingReview() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getGamesPendingReview() {
+		return gamePostRepo.count();
 	}
 
 	@Override
-	public int getUserReports() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getUserReports() {
+		return banRequestRepo.count();
 	}
 
 }
