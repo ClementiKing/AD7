@@ -29,19 +29,22 @@ public class AdProjectApplication {
 		return args -> {
 			User team7Boss = new User(); 
 			userRepo.save(team7Boss);
-			
-			List<Role> adminRole = new ArrayList<>();
-	        adminRole.add(Role.Administrator);
+
 	        
-	        Account team7BossAcc = new Account("team7Boss", "password", adminRole);
+	        Account team7BossAcc = new Account("team7Boss", "password", Role.Administrator);
 	        team7BossAcc.setUser(team7Boss);
 			accRepo.save(team7BossAcc);
-			
-			List<Role> devRole = new ArrayList<>();
-	        devRole.add(Role.Developer);
+
 	        
-	        accRepo.save(new Account("team7Dev", "password", devRole));
+	        accRepo.save(new Account("team7Dev", "password", Role.Developer));
+	        accRepo.save(new Account("team7Dev2", "password", Role.Developer));
+	        accRepo.save(new Account("team7Dev3", "password", Role.Developer));
+	        accRepo.save(new Account("team7Dev4", "password", Role.Developer));
 	        
+	        gameRepo.save(new Game("GTA1", "A nice game."));
+	        gameRepo.save(new Game("GTA2", "A nice game."));
+	        gameRepo.save(new Game("GTA3", "A nice game."));
+	        gameRepo.save(new Game("GTA4", "A nice game."));
 	        gameRepo.save(new Game("GTAV", "A nice game."));
 			
 		};

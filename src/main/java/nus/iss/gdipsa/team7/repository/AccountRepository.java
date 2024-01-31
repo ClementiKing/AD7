@@ -14,8 +14,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 	@Query("SELECT acc FROM Account acc WHERE acc.username = :username AND acc.password = :password")
 	public Account findAccountByUsernamePassword(@Param("username")String username, @Param("password")String password);
 	
-	@Query("SELECT COUNT(a) FROM Account a JOIN a.roles r WHERE r IN :roles")
-	long countByRole(@Param("roles") List<Role> roles);
+	@Query("SELECT COUNT(a) FROM Account a JOIN a.role r WHERE r IN :roles")
+	long countByRole(@Param("role") Role role);
 
 	
 }

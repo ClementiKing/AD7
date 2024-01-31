@@ -40,10 +40,10 @@ public class HomeController {
 	    acc.setSessionId(sessionId);
 	    accRepo.save(acc);
 
-	    if (acc != null && acc.getRoles().contains(Role.Administrator)) {
+	    if (acc != null && acc.getRole()==Role.Administrator) {
 	        sessionObj.setAttribute("username", accForm.getUsername());
 	        return "redirect:/admin_home";
-	    } else if (acc != null && acc.getRoles().contains(Role.Developer)) {
+	    } else if (acc != null && acc.getRole()==Role.Developer) {
 	        sessionObj.setAttribute("username", accForm.getUsername());
 	        return "redirect:/developer_home";
 	    } else {

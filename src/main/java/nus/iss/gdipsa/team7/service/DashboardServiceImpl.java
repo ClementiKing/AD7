@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import nus.iss.gdipsa.team7.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +31,29 @@ public class DashboardServiceImpl implements DashboardService{
 	
 	@Override
 	public long getTotalGamers() {
-		List<Role> roles = Arrays.asList(Role.User);
-		long count = accRepo.countByRole(roles);
+		List<Account> all = accRepo.findAll();
+		long count =0;
+		for(Account cc:all){
+			Role ccRole = cc.getRole();
+			if(ccRole==Role.User){
+				count++;
+			}
+		}
+		System.out.println("---------------User:"+count);
 		return count;
 	}
 
 	@Override
 	public long getTotalDevelopers() {
-		List<Role> roles = Arrays.asList(Role.Developer);
-		long count = accRepo.countByRole(roles);
+		List<Account> all = accRepo.findAll();
+		long count =0;
+		for(Account cc:all) {
+			Role ccRole = cc.getRole();
+			if(ccRole==Role.Developer){
+				count++;
+			}
+		}
+		System.out.println("---------------Developer:"+count);
 		return count;
 	}
 

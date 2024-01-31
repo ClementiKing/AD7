@@ -1,21 +1,15 @@
 package nus.iss.gdipsa.team7.controller;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
 import nus.iss.gdipsa.team7.model.Game;
-import nus.iss.gdipsa.team7.repository.GameRepository;
 import nus.iss.gdipsa.team7.service.DashboardService;
 import nus.iss.gdipsa.team7.service.GameService;
 
@@ -61,8 +55,50 @@ public class AdminController {
 	@GetMapping(value = { "/game-list" })
 	public String admin_game_gameList(HttpSession sessionObj, Model model) {
 		List<Game> games = gameService.findAllGames();
-		model.addAttribute("games", games);
+		List game_list=new ArrayList();
+		for (Game game:games){
+			System.out.println("--------------------------------");
+			System.out.println(game);
+			Map<String,Object> map=new HashMap<String,Object>();
+			int favorites_count=game.getUsersFavourite().size();
+			int shares_count=game.getUsersFavourite().size();
+			int reviews=game.getUsersFavourite().size();
+			int views=game.getUsersFavourite().size();
+			map.put("game",game);
+			map.put("favoritesCount",favorites_count);
+			map.put("sharesCount",shares_count);
+			map.put("numberOfReviews",reviews);
+			map.put("pageViews",views);
+			game_list.add(map);
+		}
+
+		System.out.println("-------------end-------------------");
+		System.out.println(games);
+		model.addAttribute("games", game_list);
 		return "admin_gamelist";
+	}
+
+	@GetMapping(value = { "/games-pending-review" })
+	public String games_pending_review(HttpSession sessionObj, Model model) {
+		List<Game> games = gameService.findByIsApprovedFalse();
+		List game_list=new ArrayList();
+		for (Game game:games){
+			Map<String,Object> map=new HashMap<String,Object>();
+			map.put("game",game);
+			game_list.add(map);
+		}
+		model.addAttribute("games", game_list);
+		return "admin_games_pending_review_list";
+	}
+
+	@GetMapping("/games-pending-review-detail")
+	public String games_pending_review_detail(@RequestParam("id") Integer Id, Model model) {
+		Optional<Game> game = gameService.findGameById(Id);
+		Game gg=game.get();
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("game",gg);
+		model.addAttribute("game", map);
+		return "admin_games_pending_review";
 	}
 
 	@GetMapping("/search")
@@ -72,10 +108,21 @@ public class AdminController {
 		return "admin_gamelist";
 	}
 
-	@GetMapping("/game-detail/{id}")
-	public String viewGameDetail(@PathVariable("id") Integer Id, Model model) {
+	@GetMapping("/game-detail")
+	public String viewGameDetail(@RequestParam("id") Integer Id, Model model) {
 		Optional<Game> game = gameService.findGameById(Id);
-		model.addAttribute("game", game);
+		Game gg=game.get();
+		Map<String,Object> map=new HashMap<String,Object>();
+		int favorites_count=gg.getUsersFavourite().size();
+		int shares_count=gg.getUsersFavourite().size();
+		int reviews=gg.getUsersFavourite().size();
+		int views=gg.getUsersFavourite().size();
+		map.put("game",gg);
+		map.put("favoritesCount",favorites_count);
+		map.put("sharesCount",shares_count);
+		map.put("numberOfReviews",reviews);
+		map.put("pageViews",views);
+		model.addAttribute("game", map);
 		return "admin_gameDetail";
 	}
 	
@@ -89,20 +136,23 @@ public class AdminController {
 	}
 
 
-	@GetMapping("/addGame")
-	public String showAddGameForm(Model model) {
-		model.addAttribute("game", new Game());
-		return "admin_addGame";
-	}
+	/*
+	 * @GetMapping("/addGame") public String showAddGameForm(Model model) {
+	 * model.addAttribute("game", new Game()); return "admin_addGame"; }
+	 * 
+	 * @PostMapping("/addGame") public String saveGame(@ModelAttribute("game") Game
+	 * game, BindingResult result) { if (result.hasErrors()) { return
+	 * "redirect:/game-list"; } return "redirect:/game-list"; }
+	 */
 
-	@PostMapping("/addGame")
-	public String saveGame(@ModelAttribute("game") Game game, BindingResult result) {
+	@PostMapping("/approve")
+	public String Approve(Game game, BindingResult result) {
+		gameService.approveGame(game.getId());
 		if (result.hasErrors()) {
-			return "admin_addGame";
+			return "redirect:/games-pending-review";
 		}
-		return "redirect:/game-list";
+		return "redirect:/games-pending-review";
 	}
-	
 	
 	@GetMapping("/admin-games-pending-approval")
 	public String showPendingGames(Model model) {

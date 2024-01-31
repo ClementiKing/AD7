@@ -17,7 +17,7 @@ public class Account {
 	
 	private String sessionId;
 	
-	private List<Role> roles;
+	private Role role;
 	
 	@OneToOne
 	private User user;
@@ -26,11 +26,11 @@ public class Account {
 	public Account() {
 	}
 
-	public Account(String username, String password, List<Role> roles) {
+	public Account(String username, String password, Role role) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.roles = roles;
+		this.role = role;
 	}
 
 	public String getUsername() {
@@ -49,15 +49,11 @@ public class Account {
 		this.password = password;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRole(Role role) {
+		this.role = role;
 	}
-
-
-	
-	
 }

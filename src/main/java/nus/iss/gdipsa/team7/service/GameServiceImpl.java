@@ -51,12 +51,12 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public void approveGame(Integer gameId) {
 		// TODO Auto-generated method stub
-		
+		gameRepo.approveGame(gameId);
 	}
 
 	@Override
 	public void rejectGame(Integer gameId) {
 		// TODO Auto-generated method stub
-		
+		gameRepo.rejectGame(gameId);
 	}
 }

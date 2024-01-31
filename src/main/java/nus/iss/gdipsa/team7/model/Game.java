@@ -28,6 +28,8 @@ public class Game {
 	
 	private boolean isApproved;
 	
+//	private GameStatus gameStatus;
+	
 	@ManyToMany(mappedBy="favourites")
 	private List<User> usersFavourite;
 	
