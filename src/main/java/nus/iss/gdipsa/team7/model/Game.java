@@ -26,6 +26,8 @@ public class Game {
 	
 	private int rating;
 	
+	private boolean isApproved;
+	
 	@ManyToMany(mappedBy="favourites")
 	private List<User> usersFavourite;
 	
@@ -43,4 +45,12 @@ public class Game {
 	
 	@ManyToOne
 	private GameList gamelist;
+
+	public Game(String title, String description) {
+		super();
+		this.title = title;
+		this.description = description;
+	}
+	
+	
 }

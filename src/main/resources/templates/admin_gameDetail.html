@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Details</title>
+    <!-- Include your CSS files here -->
+</head>
+<body>
+    <div class="logo">
+        <!-- Your logo here -->
+    </div>
+    <h2>Detail: GTAV</h2>
+    <form th:action="@{/saveGameDetails}" th:object="${game}" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+        </div>
+        <div>
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" th:field="*{genre}" required />
+        </div>
+        <div>
+            <label for="developer">Developer:</label>
+            <input type="text" id="developer" th:field="*{developer}" required />
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}"></textarea>
+        </div>
+        <div>
+            <label for="rating">Rating:</label>
+            <input type="text" id="rating" th:value="*{rating}" readonly />
+        </div>
+        <div>
+            <label>Statistic</label>
+            <input type="text" th:value="*{views}" readonly />
+            <input type="text" th:value="*{reviews}" readonly />
+            <input type="text" th:value="*{shares}" readonly />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+            <a href="/game-list">Back</a>
+        </div>
+    </form>
+</body>
+</html>
