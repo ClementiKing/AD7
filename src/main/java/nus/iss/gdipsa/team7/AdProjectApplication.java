@@ -42,6 +42,14 @@ public class AdProjectApplication {
 	        accRepo.save(new Account("team7Dev3", "password", Role.Developer));
 	        accRepo.save(new Account("team7Dev4", "password", Role.Developer));
 	        
+	        accRepo.save(new Account("YangHan", "password", Role.User));
+	        accRepo.save(new Account("Brandon", "password", Role.User));
+	        accRepo.save(new Account("HaiXj", "password", Role.User));
+	        accRepo.save(new Account("Luke", "password", Role.User));
+	        accRepo.save(new Account("Shiny", "password", Role.User));
+	        accRepo.save(new Account("Diaz", "password", Role.User));
+	        accRepo.save(new Account("Bolian", "password", Role.User));
+	        
 	        gameRepo.save(new Game("GTA1", "A nice game."));
 	        gameRepo.save(new Game("GTA2", "A nice game."));
 	        gameRepo.save(new Game("GTA3", "A nice game."));

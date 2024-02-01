@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import nus.iss.gdipsa.team7.model.Account;
+import nus.iss.gdipsa.team7.model.GameStatus;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +66,7 @@ public class DashboardServiceImpl implements DashboardService{
 
 	@Override
 	public long getGamesPendingReview() {
-		return gamePostRepo.count();
+		return gameRepo.countByPendingGames(GameStatus.Pending);
 	}
 
 	@Override

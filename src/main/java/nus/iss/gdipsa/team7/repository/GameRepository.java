@@ -28,4 +28,7 @@ public interface GameRepository extends JpaRepository<Game,Integer>{
 	    @Modifying
 	    @Query("UPDATE Game g SET g.gameStatus = :status WHERE g.id = :gameId")
 	    void updateGameStatus(@Param("gameId") Integer gameId, @Param("status") GameStatus gameStatus);
+
+	    @Query("SELECT COUNT(g) FROM Game g WHERE g.gameStatus = :status")
+		long countByPendingGames(@Param("status")GameStatus status);
 }
