@@ -22,4 +22,13 @@ public class BanRequest {
 	
 	@ManyToOne
 	private User user;
+
+	public BanRequest(User user, String reason) {
+		super();
+		this.user = user;
+		this.reason = reason;
+
+	}
+	
+	
 }
