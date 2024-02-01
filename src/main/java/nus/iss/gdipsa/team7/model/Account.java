@@ -23,6 +23,9 @@ public class Account {
 	private User user;
 	
 
+	private String displayName;
+	
+	
 	public Account() {
 	}
 

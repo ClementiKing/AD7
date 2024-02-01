@@ -2,63 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Games Pending Review</title>
+	<title>Game Dashboard</title>
 	<!-- Include your CSS files here -->
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
 </head>
 
 <body>
+	<div th:insert="fragment/layout :: common-header"></div>
 
-	<div class="header">
-		<div>LOGO</div>
-		<nav>
+	<div class="admin-container">
+		<div class="sidebar">
 			<ul>
-				<li><a th:href="@{/admin-dashboard}">Dashboard</a></li>
-				<li><a th:href="@{/game-list}">Game List</a></li>
-				<li><a th:href="@{/account-list}">Account List</a></li>
-                <li class="right"><span th:text="${session.username}">Username</span></li>
+				<li><a th:href="@{/game-popularList}">Popular Games</a></li>
+				<li><a th:href="@{/game-list}">Games List</a></li>
+				<li><a th:href="@{/games-pending-review}">Games Pending Review</a></li>
 			</ul>
-		</nav>
-		<div class="admin-info">
-			<span>ADMIN</span>
 		</div>
-	</div>
 
-	<div class="sidebar">
-		<ul>
-            <li><a th:href="@{/game-popularList}">Popular Games</a></li>
-            <li><a th:href="@{/game-list}">Games List</a></li>
-            <li><a th:href="@{/games-pending-review}">Games Pending Review</a></li>
-		</ul>
-	</div>
-
-	<div class="content">
-		<div class="search-bar">
-			<form th:action="@{/search}" method="get">
-				<input type="text" name="query" />
-				<button type="submit">Search</button>
-			</form>
+		<div class="content">
+			<div class="search-bar">
+				<form th:action="@{/search}" method="get">
+					<input type="text" class="search-input" placeholder="Search...">
+					<button type="submit" class="search-button">Search</button>
+				</form>
+			</div>
+			<table class="styled-table" style="border-collapse: collapse; width: 50%;">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Genre</th>
+						<th>Description</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="game : ${games}">
+						<td th:text="${game.game.title}"></td>
+						<td th:text="${game.game.genres}"></td>
+						<td>[[${game.game.description}]]</td>
+						<td><a th:href="@{/games-pending-review-detail(id=${game.game.id})}">View</a></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		<table class="styled-table" style="border-collapse: collapse; width: 50%;">
-			<thead>
-				<tr>
-					<th style="border: 1px solid black;">Name</th>
-					<th style="border: 1px solid black;">Genre</th>
-					<th style="border: 1px solid black;">Description</th>
-					<th style="border: 1px solid black;">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="game : ${games}">
-					<td style="border: 1px solid black;" th:text="${game.game.title}"></td>
-					<td style="border: 1px solid black;" th:text="${game.game.genres}"></td>
-					<td style="border: 1px solid black;">[[${game.game.description}]]</td>
-					<td style="border: 1px solid black;"><a th:href="@{/games-pending-review-detail(id=${game.game.id})}">View</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 
-	<!-- Include your JS files here -->
+		<!-- Include your JS files here -->
 
 </body>
 
