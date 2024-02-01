@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import nus.iss.gdipsa.team7.model.Account;
 import nus.iss.gdipsa.team7.model.Game;
+import nus.iss.gdipsa.team7.model.GameStatus;
 import nus.iss.gdipsa.team7.model.Role;
 import nus.iss.gdipsa.team7.model.User;
 import nus.iss.gdipsa.team7.repository.AccountRepository;

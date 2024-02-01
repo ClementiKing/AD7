@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import nus.iss.gdipsa.team7.model.Game;
+import nus.iss.gdipsa.team7.model.GameStatus;
 
 public interface GameRepository extends JpaRepository<Game,Integer>{
 	
@@ -20,16 +21,11 @@ public interface GameRepository extends JpaRepository<Game,Integer>{
 	    @Query("SELECT g FROM Game g WHERE LOWER(g.title) LIKE LOWER(CONCAT('%', :title, '%'))")
 	    List<Game> findByTitle(String title);
 
-	    @Query("SELECT g FROM Game g WHERE g.isApproved = false")
-	    List<Game> findGamesPendingApproval();
+	    @Query("SELECT g FROM Game g WHERE g.gameStatus = :status")
+	    List<Game> findByGameStatus(@Param("status") GameStatus gameStatus);
 
 	    @Transactional
 	    @Modifying
-	    @Query("UPDATE Game g SET g.isApproved = true WHERE g.id = :gameId")
-	    void approveGame(@Param("gameId") Integer gameId);
-
-	    @Transactional
-	    @Modifying
-	    @Query("UPDATE Game g SET g.isApproved = false WHERE g.id = :gameId")
-	    void rejectGame(@Param("gameId") Integer gameId);
+	    @Query("UPDATE Game g SET g.gameStatus = :status WHERE g.id = :gameId")
+	    void updateGameStatus(@Param("gameId") Integer gameId, @Param("status") GameStatus gameStatus);
 }

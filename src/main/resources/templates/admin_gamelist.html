@@ -12,9 +12,10 @@
 		<div>LOGO</div>
 		<nav>
 			<ul>
-				<li><a th:href="@{/dashboard}">Dashboard</a></li>
-				<li><a th:href="@{/game-popularList}">Game List</a></li>
+				<li><a th:href="@{/admin-dashboard}">Dashboard</a></li>
+				<li><a th:href="@{/game-list}">Game List</a></li>
 				<li><a th:href="@{/account-list}">Account List</a></li>
+                <li class="right"><span th:text="${session.username}">Username</span></li>
 			</ul>
 		</nav>
 		<div class="admin-info">
@@ -43,10 +44,6 @@
 					<th>Name</th>
 					<th>Genre</th>
 					<th>Rating</th>
-					<th>Page views</th>
-					<th>Number of reviews</th>
-					<th>Favorites count</th>
-					<th>Shares count</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -55,10 +52,6 @@
 					<td th:text="${game.game.title}"></td>
 					<td th:text="${game.game.genres}"></td>
 					<td>[[${game.game.rating}]]%</td>
-					<td th:text="${game.pageViews}"></td>
-					<td th:text="${game.numberOfReviews}"></td>
-					<td th:text="${game.favoritesCount}"></td>
-					<td th:text="${game.sharesCount}"></td>
 					<td><a th:href="@{/game-detail(id=${game.game.id})}">View</a></td>
 				</tr>
 			</tbody>

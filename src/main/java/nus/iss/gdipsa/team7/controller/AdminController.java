@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
 import nus.iss.gdipsa.team7.model.Game;
+import nus.iss.gdipsa.team7.model.GameStatus;
 import nus.iss.gdipsa.team7.service.DashboardService;
 import nus.iss.gdipsa.team7.service.GameService;
 
@@ -80,7 +81,7 @@ public class AdminController {
 
 	@GetMapping(value = { "/games-pending-review" })
 	public String games_pending_review(HttpSession sessionObj, Model model) {
-		List<Game> games = gameService.findByIsApprovedFalse();
+		List<Game> games = gameService.findByGameStatus(GameStatus.Pending);
 		List game_list=new ArrayList();
 		for (Game game:games){
 			Map<String,Object> map=new HashMap<String,Object>();
@@ -154,9 +155,18 @@ public class AdminController {
 		return "redirect:/games-pending-review";
 	}
 	
+	@PostMapping("/reject")
+	public String Reject(Game game, BindingResult result) {
+		gameService.rejectGame(game.getId());
+		if (result.hasErrors()) {
+			return "redirect:/games-pending-review";
+		}
+		return "redirect:/games-pending-review";
+	}
+	
 	@GetMapping("/admin-games-pending-approval")
 	public String showPendingGames(Model model) {
-	    List<Game> pendingGames = gameService.findByIsApprovedFalse();
+	    List<Game> pendingGames = gameService.findByGameStatus(GameStatus.Pending);
 	    model.addAttribute("pendingGames", pendingGames);
 	    return "admin_games_pending_approval";
 	}

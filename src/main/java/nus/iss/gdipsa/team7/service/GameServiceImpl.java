@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import nus.iss.gdipsa.team7.model.Game;
+import nus.iss.gdipsa.team7.model.GameStatus;
 import nus.iss.gdipsa.team7.repository.GameRepository;
 
 @Service
@@ -43,20 +44,22 @@ public class GameServiceImpl implements GameService {
 		
 	}
 
-	@Override
-	public List<Game> findByIsApprovedFalse() {
-		return gameRepo.findGamesPendingApproval();
-	}
 
 	@Override
 	public void approveGame(Integer gameId) {
 		// TODO Auto-generated method stub
-		gameRepo.approveGame(gameId);
+		gameRepo.updateGameStatus(gameId, GameStatus.Approved);
 	}
 
 	@Override
 	public void rejectGame(Integer gameId) {
 		// TODO Auto-generated method stub
-		gameRepo.rejectGame(gameId);
+		gameRepo.updateGameStatus(gameId, GameStatus.Rejected);
+	}
+
+	@Override
+	public List<Game> findByGameStatus(GameStatus gameStatus) {
+
+		return gameRepo.findByGameStatus(gameStatus);
 	}
 }

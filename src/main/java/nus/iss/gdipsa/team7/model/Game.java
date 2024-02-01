@@ -3,6 +3,8 @@ package nus.iss.gdipsa.team7.model;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,9 +28,10 @@ public class Game {
 	
 	private int rating;
 	
-	private boolean isApproved;
+//	private boolean isApproved;
 	
-//	private GameStatus gameStatus;
+	@Enumerated(EnumType.STRING)
+	private GameStatus gameStatus = GameStatus.Pending;
 	
 	@ManyToMany(mappedBy="favourites")
 	private List<User> usersFavourite;

@@ -11,9 +11,10 @@
             <h1>LOGO</h1>
             <nav>
                 <ul>
-                    <li><a th:href="@{/admin-dashboard}">Dashboard</a></li>
-                    <li><a th:href="@{/game-popularList}">Game List</a></li>
-                    <li><a th:href="@{/account-list}">Account List</a></li>
+				<li><a th:href="@{/admin-dashboard}">Dashboard</a></li>
+				<li><a th:href="@{/game-list}">Game List</a></li>
+				<li><a th:href="@{/account-list}">Account List</a></li>
+                <li class="right"><span th:text="${session.username}">Username</span></li>
                 </ul>
             </nav>
             <div>
