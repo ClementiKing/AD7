@@ -38,21 +38,21 @@
 				<button type="submit">Search</button>
 			</form>
 		</div>
-		<table>
+		<table class="styled-table" style="border-collapse: collapse; width: 50%;">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Genre</th>
-					<th>Description</th>
-					<th>Action</th>
+					<th style="border: 1px solid black;">Name</th>
+					<th style="border: 1px solid black;">Genre</th>
+					<th style="border: 1px solid black;">Description</th>
+					<th style="border: 1px solid black;">Action</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="game : ${games}">
-					<td th:text="${game.game.title}"></td>
-					<td th:text="${game.game.genres}"></td>
-					<td>[[${game.game.description}]]</td>
-					<td><a th:href="@{/games-pending-review-detail(id=${game.game.id})}">View</a></td>
+					<td style="border: 1px solid black;" th:text="${game.game.title}"></td>
+					<td style="border: 1px solid black;" th:text="${game.game.genres}"></td>
+					<td style="border: 1px solid black;">[[${game.game.description}]]</td>
+					<td style="border: 1px solid black;"><a th:href="@{/games-pending-review-detail(id=${game.game.id})}">View</a></td>
 				</tr>
 			</tbody>
 		</table>

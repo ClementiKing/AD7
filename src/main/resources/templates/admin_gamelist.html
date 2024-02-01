@@ -4,6 +4,7 @@
 <head>
 	<title>Game Dashboard</title>
 	<!-- Include your CSS files here -->
+
 </head>
 
 <body>
@@ -38,21 +39,25 @@
 				<button type="submit">Search</button>
 			</form>
 		</div>
-		<table>
+		<table class="styled-table" style="border-collapse: collapse; width: 50%;">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Genre</th>
-					<th>Rating</th>
-					<th>Action</th>
+					<th style="border: 1px solid black;">Name</th>
+					<th style="border: 1px solid black;">Genre</th>
+					<th style="border: 1px solid black;">Developer</th>
+					<th style="border: 1px solid black;">Rating</th>
+					<th style="border: 1px solid black;">Status</th>
+					<th style="border: 1px solid black;">Action</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="game : ${games}">
-					<td th:text="${game.game.title}"></td>
-					<td th:text="${game.game.genres}"></td>
-					<td>[[${game.game.rating}]]%</td>
-					<td><a th:href="@{/game-detail(id=${game.game.id})}">View</a></td>
+					<td style="border: 1px solid black;" th:text="${game.game.title}"></td>
+					<td style="border: 1px solid black;" th:text="${game.game.genres}"></td>
+					<td style="border: 1px solid black;"></td>
+					<td style="border: 1px solid black;">[[${game.game.rating}]]%</td>
+					<td style="border: 1px solid black;" th:text="${game.game.gameStatus}"></td>
+					<td style="border: 1px solid black;"><a th:href="@{/game-detail(id=${game.game.id})}">View</a></td>
 				</tr>
 			</tbody>
 		</table>
