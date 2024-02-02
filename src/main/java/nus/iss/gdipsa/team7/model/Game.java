@@ -2,15 +2,7 @@ package nus.iss.gdipsa.team7.model;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +19,9 @@ public class Game {
 	private String description;
 	
 	private int rating;
+
+	@ManyToOne
+	private Account developer;
 	
 //	private boolean isApproved;
 	
@@ -47,14 +42,15 @@ public class Game {
 	
 	@OneToMany(mappedBy="game")
 	private List<Genre> genres;
-	
+
 	@ManyToOne
 	private GameList gamelist;
 
-	public Game(String title, String description) {
+	public Game(String title, String description,Account developer) {
 		super();
 		this.title = title;
 		this.description = description;
+		this.developer=developer;
 	}
 	
 	

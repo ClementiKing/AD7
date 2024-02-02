@@ -31,9 +31,9 @@ public class User {
 	private String bio;
 	
 	private boolean publicity;
-	
-	@OneToOne(mappedBy="user")
-	private Account account;
+
+//	@OneToOne(mappedBy="user")
+//	private Account account;
 	
 	@OneToMany(mappedBy="user")
 	private List<Genre> prefers;
@@ -83,4 +83,11 @@ public class User {
 
 	@OneToMany(mappedBy="owner")
 	private List<User> followers;
+
+
+	public User(String bio, boolean publicity) {
+		this.dateCreated = LocalDate.now();
+		this.bio = bio;
+		this.publicity = publicity;
+	}
 }

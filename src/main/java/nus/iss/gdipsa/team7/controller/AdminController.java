@@ -2,6 +2,9 @@ package nus.iss.gdipsa.team7.controller;
 
 import java.util.*;
 
+import nus.iss.gdipsa.team7.model.Account;
+import nus.iss.gdipsa.team7.model.Role;
+import nus.iss.gdipsa.team7.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,9 @@ public class AdminController {
 
 	@Autowired
 	private DashboardService dashService;
+
+	@Autowired
+	private AccountService accountService;
 
 	@Autowired
 	private GameService gameService;
@@ -58,23 +64,18 @@ public class AdminController {
 		List<Game> games = gameService.findAllGames();
 		List game_list=new ArrayList();
 		for (Game game:games){
-			System.out.println("--------------------------------");
-			System.out.println(game);
 			Map<String,Object> map=new HashMap<String,Object>();
-			int favorites_count=game.getUsersFavourite().size();
-			int shares_count=game.getUsersFavourite().size();
-			int reviews=game.getUsersFavourite().size();
-			int views=game.getUsersFavourite().size();
+//			int favorites_count=game.getUsersFavourite().size();
+//			int shares_count=game.getUsersFavourite().size();
+//			int reviews=game.getUsersFavourite().size();
+//			int views=game.getUsersFavourite().size();
+//			map.put("favoritesCount",favorites_count);
+//			map.put("sharesCount",shares_count);
+//			map.put("numberOfReviews",reviews);
+//			map.put("pageViews",views);
 			map.put("game",game);
-			map.put("favoritesCount",favorites_count);
-			map.put("sharesCount",shares_count);
-			map.put("numberOfReviews",reviews);
-			map.put("pageViews",views);
 			game_list.add(map);
 		}
-
-		System.out.println("-------------end-------------------");
-		System.out.println(games);
 		model.addAttribute("games", game_list);
 		return "admin_gamelist";
 	}
@@ -91,6 +92,8 @@ public class AdminController {
 		model.addAttribute("games", game_list);
 		return "admin_games_pending_review_list";
 	}
+
+
 
 	@GetMapping("/games-pending-review-detail")
 	public String games_pending_review_detail(@RequestParam("id") Integer Id, Model model) {
@@ -158,6 +161,7 @@ public class AdminController {
 	@PostMapping("/reject")
 	public String Reject(Game game, BindingResult result) {
 		gameService.rejectGame(game.getId());
+
 		if (result.hasErrors()) {
 			return "redirect:/games-pending-review";
 		}
@@ -170,5 +174,28 @@ public class AdminController {
 	    model.addAttribute("pendingGames", pendingGames);
 	    return "admin_games_pending_approval";
 	}
-	
+
+
+	@GetMapping("/account-list" )
+	public String account_list(HttpSession sessionObj, Model model) {
+		List<Account> accountList_all = accountService.findByRoles(Role.User);
+		List accountList=new ArrayList();
+
+		for (Account acc:accountList_all){
+			Map<String,Object> map=new HashMap<String,Object>();
+			map.put("account",acc);
+			System.out.println(acc);
+			accountList.add(map);
+		}
+		model.addAttribute("accounts", accountList);
+		return "admin_account_list";
+	}
+
+	@PostMapping(value = { "/account-ban" })
+	public String account_ban(Account acc,HttpSession sessionObj, Model model) {
+		List<Account> accountList_all = accountService.findByRoles(Role.User);
+		List accountList=new ArrayList();
+
+		return "redirect:/admin_account_list";
+	}
 }

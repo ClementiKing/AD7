@@ -5,12 +5,11 @@
 	<meta charset="UTF-8">
 	<title>Game Details</title>
 	<!-- Include your CSS files here -->
+		<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
 </head>
 
 <body>
-	<div class="logo">
-		<!-- Your logo here -->
-	</div>
+
 	<h2>Detail: [[${game.game.title}]]</h2>
 	<form th:action="@{/saveGameDetails}" method="post">
 		<div>
@@ -33,13 +32,13 @@
 			<label for="rating">Rating:</label>
 			<input type="text" id="rating" th:value="${game.game.rating}" readonly />
 		</div>
-		<div>
+<!--		<div>
 			<label>Statistic</label>
 			<input type="text" th:value="${game.favoritesCount}" readonly />
 			<input type="text" th:value="${game.sharesCount}" readonly />
 			<input type="text" th:value="${game.numberOfReviews}" readonly />
 			<input type="text" th:value="${game.pageViews}" readonly />
-		</div>
+		</div>-->
 		<div>
 			<label for="gameStatus">Game status:</label>
 			<input type="text" id="gameStatus" th:value="${game.game.gameStatus}" readonly />

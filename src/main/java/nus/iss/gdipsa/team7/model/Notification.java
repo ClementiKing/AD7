@@ -29,6 +29,11 @@ public class Notification {
 	@ManyToOne
 	private User user;
 
-
-
+	public Notification(String title, String message, NotificationType type, User user) {
+		this.title = title;
+		this.message = message;
+		this.type = type;
+		this.date = LocalDate.now();
+		this.user = user;
+	}
 }

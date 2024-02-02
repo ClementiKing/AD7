@@ -38,25 +38,67 @@ public class AdProjectApplication {
 	        team7BossAcc.setUser(team7Boss);
 			accRepo.save(team7BossAcc);
 
+			Account acc1 = new Account("team7Dev", "password", Role.Developer);
+			Account acc2 = new Account("team7Dev2", "password", Role.Developer);
+			User u1=new User("0000",true);
+			User u2=new User("222",true);
+			User u3=new User("222",true);
+			User u4=new User("222",true);
+			User u5=new User("222",true);
+			User u6=new User("222",true);
+			User u7=new User("222",true);
+			User u8=new User("222",true);
+			User u9=new User("222",true);
+
+			userRepo.save(u1);
+			userRepo.save(u2);
+			userRepo.save(u3);
+			userRepo.save(u4);
+			userRepo.save(u5);
+			userRepo.save(u6);
+			userRepo.save(u7);
+			userRepo.save(u8);
+			userRepo.save(u9);
+
+			acc1.setUser(u1);
+			acc2.setUser(u2);
+			accRepo.save(acc1);
+			accRepo.save(acc2);
+
+			accRepo.save(new Account("team7Dev3", "password", Role.Developer));
+			accRepo.save(new Account("team7Dev4", "password", Role.Developer));
+
+
+
+			Account acc_user_1 = new Account("YangHan", "password", Role.User);
+			Account acc_user_2 = new Account("Brandon", "password", Role.User);
+			Account acc_user_3 = new Account("HaiXj", "password", Role.User);
+			Account acc_user_4 = new Account("Luke", "password", Role.User);
+			Account acc_user_5 = new Account("Shiny", "password", Role.User);
+			Account acc_user_6 = new Account("Diaz", "password", Role.User);
+			Account acc_user_7 = new Account("Bolian", "password", Role.User);
+			acc_user_1.setUser(u3);
+			acc_user_2.setUser(u4);
+			acc_user_3.setUser(u5);
+			acc_user_4.setUser(u6);
+			acc_user_5.setUser(u7);
+			acc_user_6.setUser(u8);
+			acc_user_7.setUser(u9);
+
+			accRepo.save(acc_user_1);
+			accRepo.save(acc_user_2);
+			accRepo.save(acc_user_3);
+			accRepo.save(acc_user_4);
+			accRepo.save(acc_user_5);
+			accRepo.save(acc_user_6);
+			accRepo.save(acc_user_7);
+
 	        
-	        accRepo.save(new Account("team7Dev", "password", Role.Developer));
-	        accRepo.save(new Account("team7Dev2", "password", Role.Developer));
-	        accRepo.save(new Account("team7Dev3", "password", Role.Developer));
-	        accRepo.save(new Account("team7Dev4", "password", Role.Developer));
-	        
-	        accRepo.save(new Account("YangHan", "password", Role.User));
-	        accRepo.save(new Account("Brandon", "password", Role.User));
-	        accRepo.save(new Account("HaiXj", "password", Role.User));
-	        accRepo.save(new Account("Luke", "password", Role.User));
-	        accRepo.save(new Account("Shiny", "password", Role.User));
-	        accRepo.save(new Account("Diaz", "password", Role.User));
-	        accRepo.save(new Account("Bolian", "password", Role.User));
-	        
-	        gameRepo.save(new Game("GTA1", "A nice game."));
-	        gameRepo.save(new Game("GTA2", "A nice game."));
-	        gameRepo.save(new Game("GTA3", "A nice game."));
-	        gameRepo.save(new Game("GTA4", "A nice game."));
-	        gameRepo.save(new Game("GTAV", "A nice game."));
+	        gameRepo.save(new Game("GTA1", "A nice game.",acc1));
+	        gameRepo.save(new Game("GTA2", "A nice game.",acc1));
+	        gameRepo.save(new Game("GTA3", "A nice game.",acc2));
+	        gameRepo.save(new Game("GTA4", "A nice game.",acc2));
+	        gameRepo.save(new Game("GTAV", "A nice game.",acc1));
 			
 	        banRequestRepo.save(new BanRequest());
 		};

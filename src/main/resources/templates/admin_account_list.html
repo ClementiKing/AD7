@@ -13,9 +13,10 @@
 	<div class="admin-container">
 		<div class="sidebar">
 			<ul>
-				<li><a th:href="@{/game-popularList}">Popular Games</a></li>
-				<li><a th:href="@{/game-list}">Games List</a></li>
-				<li><a th:href="@{/games-pending-review}">Games Pending Review</a></li>
+				<li><a th:href="@{/account-list}">Gamer List</a></li>
+				<li><a th:href="@{/developer-list}">Developer List</a></li>
+				<li><a th:href="@{/view-ban-request}">View Ban Request</a></li>
+				<li><a th:href="@{/operation-history}">Operation history</a></li>
 			</ul>
 		</div>
 
@@ -30,22 +31,19 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Genre</th>
-						<th>Developer</th>
-						<th>Rating</th>
+						<th>User ID</th>
+						<th>Register time</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="game : ${games}">
-						<td th:text="${game.game.title}"></td>
-						<td th:text="${game.game.genres}"></td>
-						<td th:text="${game.game.developer.username}"></td>
-						<td>[[${game.game.rating}]]%</td>
-						<td th:text="${game.game.gameStatus}"></td>
-						<td><a th:href="@{/game-detail(id=${game.game.id})}">View</a>
-						</td>
+					<tr th:each="account : ${accounts}">
+						<td th:text="${account.account.username}"></td>
+						<td th:text="${account.account.user.id}"></td>
+						<td th:text="${account.account.user.dateCreated}"></td>
+						<td></td>
+						<td><a th:href="@{/account-detail(id=${account.account.user.id})}">View</a></td>
 					</tr>
 				</tbody>
 			</table>
