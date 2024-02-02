@@ -15,7 +15,7 @@ public class Genre {
 	
 	@ManyToOne
 	private Game game;
-	
+
 	@ManyToOne
 	private User user;
 

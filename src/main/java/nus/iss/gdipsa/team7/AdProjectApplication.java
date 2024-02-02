@@ -3,6 +3,7 @@ package nus.iss.gdipsa.team7;
 import java.util.ArrayList;
 import java.util.List;
 
+import nus.iss.gdipsa.team7.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,10 +16,6 @@ import nus.iss.gdipsa.team7.model.GameStatus;
 import nus.iss.gdipsa.team7.model.Genre;
 import nus.iss.gdipsa.team7.model.Role;
 import nus.iss.gdipsa.team7.model.User;
-import nus.iss.gdipsa.team7.repository.AccountRepository;
-import nus.iss.gdipsa.team7.repository.BanRequestRepository;
-import nus.iss.gdipsa.team7.repository.GameRepository;
-import nus.iss.gdipsa.team7.repository.UserRepository;
 
 @SpringBootApplication
 public class AdProjectApplication {
@@ -28,7 +25,7 @@ public class AdProjectApplication {
 	}
 
 	@Bean
-	CommandLineRunner loadData(AccountRepository accRepo, UserRepository userRepo, GameRepository gameRepo, BanRequestRepository banRequestRepo)
+	CommandLineRunner loadData(AccountRepository accRepo, GenreRepository greRepo, UserRepository userRepo, GameRepository gameRepo, BanRequestRepository banRequestRepo)
 	{
 		return args -> {
 			User team7Boss = new User("0",true); 
@@ -66,8 +63,8 @@ public class AdProjectApplication {
 			accRepo.save(acc1);
 			accRepo.save(acc2);
 
-			Account acc_developer_1 = new Account("team7Dev3", "password", Role.Developer);
-			Account acc_developer_2 = new Account("team7Dev4", "password", Role.Developer);
+			Account acc_developer_1 = new Account("team7Dev3", "password", Role.Developer,"Xun");
+			Account acc_developer_2 = new Account("team7Dev4", "password", Role.Developer,"Tom");
 			User d3=new User("12",true);
 			User d4=new User("123",true);
 			
@@ -83,13 +80,13 @@ public class AdProjectApplication {
 
 
 
-			Account acc_user_1 = new Account("YangHan", "password", Role.User);
-			Account acc_user_2 = new Account("Brandon", "password", Role.User);
-			Account acc_user_3 = new Account("HaiXj", "password", Role.User);
-			Account acc_user_4 = new Account("Luke", "password", Role.User);
-			Account acc_user_5 = new Account("Shiny", "password", Role.User);
-			Account acc_user_6 = new Account("Diaz", "password", Role.User);
-			Account acc_user_7 = new Account("Bolian", "password", Role.User);
+			Account acc_user_1 = new Account("YangHan", "password", Role.User,"TiNa");
+			Account acc_user_2 = new Account("Brandon", "password", Role.User,"Yang");
+			Account acc_user_3 = new Account("HaiXj", "password", Role.User,"Saxx");
+			Account acc_user_4 = new Account("Luke", "password", Role.User,"Rshq");
+			Account acc_user_5 = new Account("Shiny", "password", Role.User,"drikn");
+			Account acc_user_6 = new Account("Diaz", "password", Role.User,"wu");
+			Account acc_user_7 = new Account("Bolian", "password", Role.User,"Xi");
 			acc_user_1.setUser(u3);
 			acc_user_2.setUser(u4);
 			acc_user_3.setUser(u5);
@@ -107,9 +104,17 @@ public class AdProjectApplication {
 			accRepo.save(acc_user_7);
 
 	        List<Genre> gen = new ArrayList<>();
-	        gen.add(new Genre("Open world"));
-	        
-	        gameRepo.save(new Game("GTA1", "A nice game.",acc1,gen));
+			Genre w1 = new Genre("Open world");
+			Genre w2 = new Genre("SASA world");
+			gen.add(w2);
+			gen.add(w1);
+			greRepo.save(w2);
+			greRepo.save(w1);
+			Game game = new Game("GTA1", "A nice game.", acc1, gen);
+			System.out.println("-------------------------------------");
+			System.out.println(game);
+			System.out.println("-------------------------------------");
+			gameRepo.save(game);
 	        gameRepo.save(new Game("GTA2", "A nice game.",acc1,gen));
 	        gameRepo.save(new Game("GTA3", "A nice game.",acc2,gen));
 	        gameRepo.save(new Game("GTA4", "A nice game.",acc2,gen));

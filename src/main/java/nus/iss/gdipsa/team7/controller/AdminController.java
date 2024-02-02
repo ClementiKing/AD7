@@ -63,7 +63,9 @@ public class AdminController {
 	public String admin_game_gameList(HttpSession sessionObj, Model model) {
 		List<Game> games = gameService.findAllGames();
 		List game_list = new ArrayList();
-//		for (Game game : games) {
+		for (Game game : games) {
+			System.out.println(game);
+		}
 	//		Map<String, Object> map = new HashMap<String, Object>();
 //			int favorites_count=game.getUsersFavourite().size();
 //			int shares_count=game.getUsersFavourite().size();
@@ -215,18 +217,32 @@ public class AdminController {
 	}
 	
 	 @GetMapping("/gamer-search")
-	    public String admin_searchGamer(@RequestParam("query") String query, Model model) {
-	        List<Account> searchResults = accountService.searchGamerByName(query);
-	        model.addAttribute("accounts", searchResults);
-	        return "admin_account_list";
-	    }
+	 public String admin_searchGamer(@RequestParam("query") String query, Model model) {
+		List<Account> searchResults = accountService.searchGamerByName(query);
+		List<Map<String, Object>> accountList = new ArrayList<>();
+		for (Account acc : searchResults) {
+			 Map<String, Object> map = new HashMap<>();
+			 map.put("account", acc);
+			 accountList.add(map);
+		}
+		 model.addAttribute("accounts", accountList);
+		 model.addAttribute("searchAction", "/gamer-search");
+		 return "admin_account_list";
+	 }
 	 
 	 @GetMapping("/developer-search")
-	    public String admin_searchDeveloper(@RequestParam("query") String query, Model model) {
-	        List<Account> searchResults = accountService.searchDeveloperByName(query);
-	        model.addAttribute("accounts", searchResults);
-	        return "admin_account_list";
-	    }
+	 public String admin_searchDeveloper(@RequestParam("query") String query, Model model) {
+		List<Account> searchResults = accountService.searchDeveloperByName(query);
+		List<Map<String, Object>> accountList = new ArrayList<>();
+		for (Account acc : searchResults) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("account", acc);
+			System.out.println(acc);
+			accountList.add(map);
+		}
+		model.addAttribute("accounts", accountList);
+		return "admin_account_list";
+	}
 	 
 	 
 	

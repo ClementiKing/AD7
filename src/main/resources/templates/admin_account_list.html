@@ -31,6 +31,7 @@
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Display Name</th>
 						<th>Role</th>
 						<th>User ID</th>
 						<th>Register time</th>
@@ -41,6 +42,7 @@
 				<tbody>
 					<tr th:each="account : ${accounts}">
 						<td th:text="${account.account.username}"></td>
+						<td th:text="${account.account.displayName}"></td>
 						<td th:text="${account.account.role}"></td>
 						<td th:text="${account.account.user.id}"></td>
 						<td th:text="${account.account.user.dateCreated}"></td>

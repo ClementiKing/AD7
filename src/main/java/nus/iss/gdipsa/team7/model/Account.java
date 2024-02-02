@@ -36,6 +36,13 @@ public class Account {
 		this.password = password;
 		this.role = role;
 	}
+	public Account(String username, String password, Role role,String displayName) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.displayName=displayName;
+	}
 
 	public String getUsername() {
 		return username;

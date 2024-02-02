@@ -41,7 +41,7 @@
 					<tr th:each="game : ${games}">
 						<td th:text="${game.title}"></td>
 						<td>
-							<ul th:each="game : ${game.genres}">
+							<ul th:each="genre : ${game.genres}">
 								<li th:text="${genre.name}"></li>
 							</ul>
 						</td>

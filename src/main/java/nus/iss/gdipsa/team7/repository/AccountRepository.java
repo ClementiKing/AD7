@@ -18,9 +18,9 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 	@Query("SELECT COUNT(a) FROM Account a JOIN a.role r WHERE r IN :roles")
 	public long countByRole(@Param("role") Role role);
 
-	@Query("SELECT acc FROM Account acc WHERE acc.displayName LIKE %:name% AND acc.role = User")
+	@Query("SELECT acc FROM Account acc WHERE acc.username LIKE %:name% AND acc.role = User or acc.displayName LIKE %:name% AND acc.role = User")
 	public List<Account> SearchGamerByName(@Param("name") String name);
 	
-	@Query("SELECT acc FROM Account acc WHERE acc.displayName LIKE %:name% AND acc.role = Developer")
+	@Query("SELECT acc FROM Account acc WHERE acc.username LIKE %:name% AND acc.role = Developer or acc.displayName LIKE %:name% AND acc.role = Developer")
 	public List<Account> SearchDeveloperByName(@Param("name") String name);
 }

@@ -148,5 +148,21 @@ public class Game {
 		this.gamelist = gamelist;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Game{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", rating=" + rating +
+				", developer=" + developer +
+				", gameStatus=" + gameStatus +
+				", usersFavourite=" + usersFavourite +
+				", usersWish=" + usersWish +
+				", usersFollow=" + usersFollow +
+				", posts=" + posts +
+				", genres=" + genres +
+				", gamelist=" + gamelist +
+				'}';
+	}
 }
