@@ -18,4 +18,10 @@ public class Genre {
 	
 	@ManyToOne
 	private User user;
+
+	public Genre(String name) {
+		super();
+		this.name = name;
+	}
+	
 }

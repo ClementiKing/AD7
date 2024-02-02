@@ -13,19 +13,13 @@
 	<div class="admin-container">
 		<div class="sidebar">
 			<ul>
-				<li><a th:href="@{/game-popularList}">Popular Games</a></li>
+<!--				<li><a th:href="@{/game-popularList}">Popular Games</a></li>-->
 				<li><a th:href="@{/game-list}">Games List</a></li>
 				<li><a th:href="@{/games-pending-review}">Games Pending Review</a></li>
 			</ul>
 		</div>
 
 		<div class="content">
-			<div class="search-bar">
-				<form th:action="@{/search}" method="get">
-					<input type="text" class="search-input" placeholder="Search...">
-					<button type="submit" class="search-button">Search</button>
-				</form>
-			</div>
 			<table class="styled-table" style="border-collapse: collapse; width: 50%;">
 				<thead>
 					<tr>
@@ -38,7 +32,11 @@
 				<tbody>
 					<tr th:each="game : ${games}">
 						<td th:text="${game.game.title}"></td>
-						<td th:text="${game.game.genres}"></td>
+						<td>
+							<ul th:each="genre : ${game.game.genres}">
+								<li th:text="${genre.name}"></li>
+							</ul>
+						</td>
 						<td>[[${game.game.description}]]</td>
 						<td><a th:href="@{/games-pending-review-detail(id=${game.game.id})}">View</a></td>
 					</tr>

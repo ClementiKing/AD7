@@ -25,6 +25,7 @@ public class Account {
 
 	private String displayName;
 	
+	private AccountStatus accStatus = AccountStatus.Normal;
 	
 	public Account() {
 	}

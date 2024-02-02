@@ -26,6 +26,8 @@ public class Notification {
 	
 	private LocalDate date;
 	
+	private NotificationStatus notificationStatus = NotificationStatus.Unread;
+	
 	@ManyToOne
 	private User user;
 

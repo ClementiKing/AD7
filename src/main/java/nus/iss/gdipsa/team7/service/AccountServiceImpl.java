@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import nus.iss.gdipsa.team7.model.Account;
+import nus.iss.gdipsa.team7.model.Game;
 import nus.iss.gdipsa.team7.repository.AccountRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -35,5 +37,16 @@ public class AccountServiceImpl implements AccountService{
 		}
 		return accounts;
 	}
+
+	@Override
+	public List<Account> searchGamerByName(String query) {
+		return accRepo.SearchGamerByName(query);
+	}
+
+	@Override
+	public List<Account> searchDeveloperByName(String query) {
+		return accRepo.SearchDeveloperByName(query);
+	}
+
 
 }

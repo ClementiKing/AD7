@@ -1,5 +1,6 @@
 package nus.iss.gdipsa.team7.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,8 +16,11 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 	public Account findAccountByUsernamePassword(@Param("username")String username, @Param("password")String password);
 	
 	@Query("SELECT COUNT(a) FROM Account a JOIN a.role r WHERE r IN :roles")
-	long countByRole(@Param("role") Role role);
+	public long countByRole(@Param("role") Role role);
 
-
-
+	@Query("SELECT acc FROM Account acc WHERE acc.displayName LIKE %:name% AND acc.role = User")
+	public List<Account> SearchGamerByName(@Param("name") String name);
+	
+	@Query("SELECT acc FROM Account acc WHERE acc.displayName LIKE %:name% AND acc.role = Developer")
+	public List<Account> SearchDeveloperByName(@Param("name") String name);
 }

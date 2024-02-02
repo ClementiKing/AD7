@@ -49,8 +49,13 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public void approveGame(Integer gameId) {
-		// TODO Auto-generated method stub
 		gameRepo.updateGameStatus(gameId, GameStatus.Approved);
+		Optional<Game> repo = gameRepo.findById(gameId);
+		Game game=repo.get();
+		Account developer = game.getDeveloper();
+		User user = developer.getUser();
+		Notification nt = new Notification("Your game has been approved", "Your game application has been approved. Congratulations to you.", NotificationType.GameApproved, user);
+		ntRepo.save(nt);
 	}
 
 	@Override
@@ -61,7 +66,7 @@ public class GameServiceImpl implements GameService {
 		Game game=repo.get();
 		Account developer = game.getDeveloper();
 		User user = developer.getUser();
-		Notification nt = new Notification("The game has not been audited", "Your game application has been rejected, please revise it and submit it for review.", NotificationType.GameRejected, user);
+		Notification nt = new Notification("Your game has been rejected", "Your game application has been rejected, please revise it and submit it for review.", NotificationType.GameRejected, user);
 		ntRepo.save(nt);
 	}
 
@@ -70,4 +75,10 @@ public class GameServiceImpl implements GameService {
 
 		return gameRepo.findByGameStatus(gameStatus);
 	}
+
+	@Override
+	public List<Game> searchGamesByTerm(String searchTerm) {
+		return gameRepo.searchByGameNameOrDeveloperName(searchTerm);
+	}
+	
 }

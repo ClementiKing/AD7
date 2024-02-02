@@ -12,6 +12,7 @@ import nus.iss.gdipsa.team7.model.Account;
 import nus.iss.gdipsa.team7.model.BanRequest;
 import nus.iss.gdipsa.team7.model.Game;
 import nus.iss.gdipsa.team7.model.GameStatus;
+import nus.iss.gdipsa.team7.model.Genre;
 import nus.iss.gdipsa.team7.model.Role;
 import nus.iss.gdipsa.team7.model.User;
 import nus.iss.gdipsa.team7.repository.AccountRepository;
@@ -30,7 +31,7 @@ public class AdProjectApplication {
 	CommandLineRunner loadData(AccountRepository accRepo, UserRepository userRepo, GameRepository gameRepo, BanRequestRepository banRequestRepo)
 	{
 		return args -> {
-			User team7Boss = new User(); 
+			User team7Boss = new User("0",true); 
 			userRepo.save(team7Boss);
 
 	        
@@ -40,18 +41,18 @@ public class AdProjectApplication {
 
 			Account acc1 = new Account("team7Dev", "password", Role.Developer);
 			Account acc2 = new Account("team7Dev2", "password", Role.Developer);
-			User u1=new User("0000",true);
-			User u2=new User("222",true);
-			User u3=new User("222",true);
-			User u4=new User("222",true);
-			User u5=new User("222",true);
-			User u6=new User("222",true);
-			User u7=new User("222",true);
-			User u8=new User("222",true);
-			User u9=new User("222",true);
+			User d1=new User("1",true);
+			User d2=new User("2",true);
+			User u3=new User("3",true);
+			User u4=new User("4",true);
+			User u5=new User("5",true);
+			User u6=new User("6",true);
+			User u7=new User("7",true);
+			User u8=new User("8",true);
+			User u9=new User("9",true);
 
-			userRepo.save(u1);
-			userRepo.save(u2);
+			userRepo.save(d1);
+			userRepo.save(d2);
 			userRepo.save(u3);
 			userRepo.save(u4);
 			userRepo.save(u5);
@@ -60,13 +61,25 @@ public class AdProjectApplication {
 			userRepo.save(u8);
 			userRepo.save(u9);
 
-			acc1.setUser(u1);
-			acc2.setUser(u2);
+			acc1.setUser(d1);
+			acc2.setUser(d2);
 			accRepo.save(acc1);
 			accRepo.save(acc2);
 
-			accRepo.save(new Account("team7Dev3", "password", Role.Developer));
-			accRepo.save(new Account("team7Dev4", "password", Role.Developer));
+			Account acc_developer_1 = new Account("team7Dev3", "password", Role.Developer);
+			Account acc_developer_2 = new Account("team7Dev4", "password", Role.Developer);
+			User d3=new User("12",true);
+			User d4=new User("123",true);
+			
+			userRepo.save(d3);
+			userRepo.save(d4);
+			
+			acc_developer_1.setUser(d3);
+			acc_developer_2.setUser(d4);
+
+			
+			accRepo.save(acc_developer_1);
+			accRepo.save(acc_developer_2);
 
 
 
@@ -93,12 +106,14 @@ public class AdProjectApplication {
 			accRepo.save(acc_user_6);
 			accRepo.save(acc_user_7);
 
+	        List<Genre> gen = new ArrayList<>();
+	        gen.add(new Genre("Open world"));
 	        
-	        gameRepo.save(new Game("GTA1", "A nice game.",acc1));
-	        gameRepo.save(new Game("GTA2", "A nice game.",acc1));
-	        gameRepo.save(new Game("GTA3", "A nice game.",acc2));
-	        gameRepo.save(new Game("GTA4", "A nice game.",acc2));
-	        gameRepo.save(new Game("GTAV", "A nice game.",acc1));
+	        gameRepo.save(new Game("GTA1", "A nice game.",acc1,gen));
+	        gameRepo.save(new Game("GTA2", "A nice game.",acc1,gen));
+	        gameRepo.save(new Game("GTA3", "A nice game.",acc2,gen));
+	        gameRepo.save(new Game("GTA4", "A nice game.",acc2,gen));
+	        gameRepo.save(new Game("GTAV", "A nice game.",acc1,gen));
 			
 	        banRequestRepo.save(new BanRequest());
 		};

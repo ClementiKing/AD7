@@ -31,6 +31,9 @@ public interface GameRepository extends JpaRepository<Game,Integer>{
 
 	    @Query("SELECT COUNT(g) FROM Game g WHERE g.gameStatus = :status")
 		long countByPendingGames(@Param("status")GameStatus status);
+	    
+	    @Query("SELECT g FROM Game g WHERE g.title LIKE %:searchTerm% OR g.developer.username LIKE %:searchTerm%")
+	    List<Game> searchByGameNameOrDeveloperName(@Param("searchTerm") String searchTerm);
 
 
 }

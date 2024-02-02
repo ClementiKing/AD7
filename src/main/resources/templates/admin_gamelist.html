@@ -13,7 +13,7 @@
 	<div class="admin-container">
 		<div class="sidebar">
 			<ul>
-				<li><a th:href="@{/game-popularList}">Popular Games</a></li>
+<!--				<li><a th:href="@{/game-popularList}">Popular Games</a></li>-->
 				<li><a th:href="@{/game-list}">Games List</a></li>
 				<li><a th:href="@{/games-pending-review}">Games Pending Review</a></li>
 			</ul>
@@ -21,8 +21,8 @@
 
 		<div class="content">
 			<div class="search-bar">
-				<form th:action="@{/search}" method="get">
-					<input type="text" class="search-input" placeholder="Search...">
+				<form th:action="@{/game-list-search}" method="get">
+					<input type="text" class="search-input" name="query" placeholder="Input game name or developer name...">
 					<button type="submit" class="search-button">Search</button>
 				</form>
 			</div>
@@ -39,12 +39,16 @@
 				</thead>
 				<tbody>
 					<tr th:each="game : ${games}">
-						<td th:text="${game.game.title}"></td>
-						<td th:text="${game.game.genres}"></td>
-						<td th:text="${game.game.developer.username}"></td>
-						<td>[[${game.game.rating}]]%</td>
-						<td th:text="${game.game.gameStatus}"></td>
-						<td><a th:href="@{/game-detail(id=${game.game.id})}">View</a>
+						<td th:text="${game.title}"></td>
+						<td>
+							<ul th:each="game : ${game.genres}">
+								<li th:text="${genre.name}"></li>
+							</ul>
+						</td>
+						<td th:text="${game.developer.username}"></td>
+						<td>[[${game.rating}]]%</td>
+						<td th:text="${game.gameStatus}"></td>
+						<td><a th:href="@{/game-detail(id=${game.id})}">View</a>
 						</td>
 					</tr>
 				</tbody>

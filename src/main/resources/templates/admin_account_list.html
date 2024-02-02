@@ -15,15 +15,15 @@
 			<ul>
 				<li><a th:href="@{/account-list}">Gamer List</a></li>
 				<li><a th:href="@{/developer-list}">Developer List</a></li>
-				<li><a th:href="@{/view-ban-request}">View Ban Request</a></li>
-				<li><a th:href="@{/operation-history}">Operation history</a></li>
+<!--				<li><a th:href="@{/view-ban-request}">View Ban Request</a></li>
+				<li><a th:href="@{/operation-history}">Operation history</a></li>-->
 			</ul>
 		</div>
 
 		<div class="content">
 			<div class="search-bar">
-				<form th:action="@{/search}" method="get">
-					<input type="text" class="search-input" placeholder="Search...">
+				<form th:action="@{${searchAction}}" method="get">
+					<input type="text" name="query" nameclass="search-input" placeholder="">
 					<button type="submit" class="search-button">Search</button>
 				</form>
 			</div>
@@ -31,6 +31,7 @@
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Role</th>
 						<th>User ID</th>
 						<th>Register time</th>
 						<th>Status</th>
@@ -40,9 +41,10 @@
 				<tbody>
 					<tr th:each="account : ${accounts}">
 						<td th:text="${account.account.username}"></td>
+						<td th:text="${account.account.role}"></td>
 						<td th:text="${account.account.user.id}"></td>
 						<td th:text="${account.account.user.dateCreated}"></td>
-						<td></td>
+						<td th:text="${account.account.accStatus}"></td>
 						<td><a th:href="@{/account-detail(id=${account.account.user.id})}">View</a></td>
 					</tr>
 				</tbody>

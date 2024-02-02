@@ -16,4 +16,5 @@ public interface GameService {
 	public List<Game> findByGameStatus(GameStatus gameStatus);
 	public void approveGame(Integer gameId);
 	public void rejectGame(Integer gameId);
+	public List<Game> searchGamesByTerm(String searchTerm);
 }

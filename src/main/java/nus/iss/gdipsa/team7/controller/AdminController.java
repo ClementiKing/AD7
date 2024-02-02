@@ -62,9 +62,9 @@ public class AdminController {
 	@GetMapping(value = { "/game-list" })
 	public String admin_game_gameList(HttpSession sessionObj, Model model) {
 		List<Game> games = gameService.findAllGames();
-		List game_list=new ArrayList();
-		for (Game game:games){
-			Map<String,Object> map=new HashMap<String,Object>();
+		List game_list = new ArrayList();
+//		for (Game game : games) {
+	//		Map<String, Object> map = new HashMap<String, Object>();
 //			int favorites_count=game.getUsersFavourite().size();
 //			int shares_count=game.getUsersFavourite().size();
 //			int reviews=game.getUsersFavourite().size();
@@ -73,72 +73,78 @@ public class AdminController {
 //			map.put("sharesCount",shares_count);
 //			map.put("numberOfReviews",reviews);
 //			map.put("pageViews",views);
-			map.put("game",game);
-			game_list.add(map);
-		}
-		model.addAttribute("games", game_list);
+//			map.put("game", game);
+	//		game_list.add(map);
+	//	}
+		model.addAttribute("games", games);
 		return "admin_gamelist";
 	}
+	
+	 @GetMapping("/game-list-search")
+	    public String admin_searchGame(@RequestParam("query") String query, Model model) {
+	        List<Game> searchResults = gameService.searchGamesByTerm(query);
+	        model.addAttribute("games", searchResults);
+	        return "admin_gamelist";
+	    }
 
 	@GetMapping(value = { "/games-pending-review" })
 	public String games_pending_review(HttpSession sessionObj, Model model) {
 		List<Game> games = gameService.findByGameStatus(GameStatus.Pending);
-		List game_list=new ArrayList();
-		for (Game game:games){
-			Map<String,Object> map=new HashMap<String,Object>();
-			map.put("game",game);
+		List game_list = new ArrayList();
+		for (Game game : games) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("game", game);
 			game_list.add(map);
 		}
 		model.addAttribute("games", game_list);
 		return "admin_games_pending_review_list";
 	}
 
-
-
 	@GetMapping("/games-pending-review-detail")
 	public String games_pending_review_detail(@RequestParam("id") Integer Id, Model model) {
 		Optional<Game> game = gameService.findGameById(Id);
-		Game gg=game.get();
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("game",gg);
+		Game gg = game.get();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("game", gg);
 		model.addAttribute("game", map);
 		return "admin_games_pending_review";
 	}
 
-	@GetMapping("/search")
-	public String searchGames(@RequestParam("query") String query, Model model) {
-		List<Game> games = gameService.searchGames(query);
-		model.addAttribute("games", games);
-		return "admin_gamelist";
-	}
+	/*
+	 * @GetMapping("/search") public String searchGames(@RequestParam("query")
+	 * String query, Model model) { List<Game> games =
+	 * gameService.searchGames(query); model.addAttribute("games", games); return
+	 * "admin_gamelist"; }
+	 */
+	
+
 
 	@GetMapping("/game-detail")
 	public String viewGameDetail(@RequestParam("id") Integer Id, Model model) {
 		Optional<Game> game = gameService.findGameById(Id);
-		Game gg=game.get();
-		Map<String,Object> map=new HashMap<String,Object>();
-		int favorites_count=gg.getUsersFavourite().size();
-		int shares_count=gg.getUsersFavourite().size();
-		int reviews=gg.getUsersFavourite().size();
-		int views=gg.getUsersFavourite().size();
-		map.put("game",gg);
-		map.put("favoritesCount",favorites_count);
-		map.put("sharesCount",shares_count);
-		map.put("numberOfReviews",reviews);
-		map.put("pageViews",views);
+		Game gg = game.get();
+		Map<String, Object> map = new HashMap<String, Object>();
+		int favorites_count = gg.getUsersFavourite().size();
+		int shares_count = gg.getUsersFavourite().size();
+		int reviews = gg.getUsersFavourite().size();
+		int views = gg.getUsersFavourite().size();
+		map.put("game", gg);
+		map.put("favoritesCount", favorites_count);
+		map.put("sharesCount", shares_count);
+		map.put("numberOfReviews", reviews);
+		map.put("pageViews", views);
 		model.addAttribute("game", map);
 		return "admin_gameDetail";
 	}
-	
+
 	@PostMapping("/saveGameDetails")
 	public String saveGameDetails(@ModelAttribute("game") Game game, BindingResult result) {
-	    if (result.hasErrors()) {
-	        return "admin_gameDetail";
-	    }
-	    gameService.save(game);
-	    return "redirect:/game-list";
+		if (result.hasErrors()) {
+			return "admin_gameDetail";
+		}
+		gameService.save(game);
+		return "redirect:/game-list";
 	}
-
 
 	/*
 	 * @GetMapping("/addGame") public String showAddGameForm(Model model) {
@@ -157,7 +163,7 @@ public class AdminController {
 		}
 		return "redirect:/games-pending-review";
 	}
-	
+
 	@PostMapping("/reject")
 	public String Reject(Game game, BindingResult result) {
 		gameService.rejectGame(game.getId());
@@ -167,34 +173,67 @@ public class AdminController {
 		}
 		return "redirect:/games-pending-review";
 	}
-	
+
 	@GetMapping("/admin-games-pending-approval")
 	public String showPendingGames(Model model) {
-	    List<Game> pendingGames = gameService.findByGameStatus(GameStatus.Pending);
-	    model.addAttribute("pendingGames", pendingGames);
-	    return "admin_games_pending_approval";
+		List<Game> pendingGames = gameService.findByGameStatus(GameStatus.Pending);
+		model.addAttribute("pendingGames", pendingGames);
+		return "admin_games_pending_approval";
 	}
 
-
-	@GetMapping("/account-list" )
+	@GetMapping("/account-list")
 	public String account_list(HttpSession sessionObj, Model model) {
-		List<Account> accountList_all = accountService.findByRoles(Role.User);
-		List accountList=new ArrayList();
+	    List<Account> accountList_all_User = accountService.findByRoles(Role.User);
+	    List<Map<String, Object>> accountList = new ArrayList<>();
 
-		for (Account acc:accountList_all){
-			Map<String,Object> map=new HashMap<String,Object>();
-			map.put("account",acc);
-			System.out.println(acc);
-			accountList.add(map);
-		}
-		model.addAttribute("accounts", accountList);
-		return "admin_account_list";
+	    for (Account acc : accountList_all_User) {
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("account", acc);
+	        System.out.println(acc);
+	        accountList.add(map);
+	    }
+
+	    model.addAttribute("accounts", accountList);
+	    model.addAttribute("searchAction", "/gamer-search");
+	    return "admin_account_list";
 	}
+	
+	@GetMapping("/developer-list")
+	public String Developer_list(HttpSession sessionObj, Model model) {
+	    List<Account> accountList_all_Developer = accountService.findByRoles(Role.Developer);
+	    List<Map<String, Object>> accountList = new ArrayList<>();
+	    for (Account acc : accountList_all_Developer) {
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("account", acc);
+	        System.out.println(acc);
+	        accountList.add(map);
+	    }
 
+	    model.addAttribute("accounts", accountList);
+	    model.addAttribute("searchAction", "/developer-search");
+	    return "admin_account_list";
+	}
+	
+	 @GetMapping("/gamer-search")
+	    public String admin_searchGamer(@RequestParam("query") String query, Model model) {
+	        List<Account> searchResults = accountService.searchGamerByName(query);
+	        model.addAttribute("accounts", searchResults);
+	        return "admin_account_list";
+	    }
+	 
+	 @GetMapping("/developer-search")
+	    public String admin_searchDeveloper(@RequestParam("query") String query, Model model) {
+	        List<Account> searchResults = accountService.searchDeveloperByName(query);
+	        model.addAttribute("accounts", searchResults);
+	        return "admin_account_list";
+	    }
+	 
+	 
+	
 	@PostMapping(value = { "/account-ban" })
-	public String account_ban(Account acc,HttpSession sessionObj, Model model) {
+	public String account_ban(Account acc, HttpSession sessionObj, Model model) {
 		List<Account> accountList_all = accountService.findByRoles(Role.User);
-		List accountList=new ArrayList();
+		List accountList = new ArrayList();
 
 		return "redirect:/admin_account_list";
 	}
