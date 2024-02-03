@@ -38,4 +38,17 @@ public class Notification {
 		this.date = LocalDate.now();
 		this.user = user;
 	}
+	
+	@Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", type=" + type +
+                ", date=" + date +
+                ", notificationStatus=" + notificationStatus +
+                ", userId=" + (user != null ? user.getId() : null) +
+                '}';
+    }
 }
