@@ -68,21 +68,6 @@ public class AdminController {
 		}
 		List<Game> games = gameService.findAllGames();
 		List game_list = new ArrayList();
-		for (Game game : games) {
-			System.out.println(game);
-		}
-	//		Map<String, Object> map = new HashMap<String, Object>();
-//			int favorites_count=game.getUsersFavourite().size();
-//			int shares_count=game.getUsersFavourite().size();
-//			int reviews=game.getUsersFavourite().size();
-//			int views=game.getUsersFavourite().size();
-//			map.put("favoritesCount",favorites_count);
-//			map.put("sharesCount",shares_count);
-//			map.put("numberOfReviews",reviews);
-//			map.put("pageViews",views);
-//			map.put("game", game);
-	//		game_list.add(map);
-	//	}
 		model.addAttribute("games", games);
 		return "admin_gamelist";
 	}
