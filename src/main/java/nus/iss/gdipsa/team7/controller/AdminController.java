@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import nus.iss.gdipsa.team7.model.Game;
 import nus.iss.gdipsa.team7.model.GameStatus;
@@ -62,10 +61,6 @@ public class AdminController {
 
 	@GetMapping(value = { "/game-list" })
 	public String admin_game_gameList(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
 		List<Game> games = gameService.findAllGames();
 		List game_list = new ArrayList();
 		for (Game game : games) {
@@ -96,10 +91,6 @@ public class AdminController {
 
 	@GetMapping(value = { "/games-pending-review" })
 	public String games_pending_review(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
 		List<Game> games = gameService.findByGameStatus(GameStatus.Pending);
 		List game_list = new ArrayList();
 		for (Game game : games) {
@@ -112,11 +103,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/games-pending-review-detail")
-	public String games_pending_review_detail(@RequestParam("id") Integer Id, Model model, HttpSession sessionObj) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
+	public String games_pending_review_detail(@RequestParam("id") Integer Id, Model model) {
 		Optional<Game> game = gameService.findGameById(Id);
 		Game gg = game.get();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -135,11 +122,7 @@ public class AdminController {
 
 
 	@GetMapping("/game-detail")
-	public String viewGameDetail(@RequestParam("id") Integer Id, Model model, HttpSession sessionObj) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
+	public String viewGameDetail(@RequestParam("id") Integer Id, Model model) {
 		Optional<Game> game = gameService.findGameById(Id);
 		Game gg = game.get();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -194,11 +177,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/admin-games-pending-approval")
-	public String showPendingGames(Model model, HttpSession sessionObj) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
+	public String showPendingGames(Model model) {
 		List<Game> pendingGames = gameService.findByGameStatus(GameStatus.Pending);
 		model.addAttribute("pendingGames", pendingGames);
 		return "admin_games_pending_approval";
@@ -206,10 +185,6 @@ public class AdminController {
 
 	@GetMapping("/account-list")
 	public String account_list(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
 	    List<Account> accountList_all_User = accountService.findByRoles(Role.User);
 	    List<Map<String, Object>> accountList = new ArrayList<>();
 
@@ -227,10 +202,6 @@ public class AdminController {
 	
 	@GetMapping("/developer-list")
 	public String Developer_list(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		}
 	    List<Account> accountList_all_Developer = accountService.findByRoles(Role.Developer);
 	    List<Map<String, Object>> accountList = new ArrayList<>();
 	    for (Account acc : accountList_all_Developer) {
@@ -282,14 +253,4 @@ public class AdminController {
 
 		return "redirect:/admin_account_list";
 	}
-	
-	@GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        
-        if (session != null) {
-            session.invalidate();
-        }
-        return "redirect:/login";
-    }
 }
