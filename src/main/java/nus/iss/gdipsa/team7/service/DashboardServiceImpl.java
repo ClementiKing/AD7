@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import nus.iss.gdipsa.team7.model.Account;
+import nus.iss.gdipsa.team7.model.Game;
 import nus.iss.gdipsa.team7.model.GameStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,4 +75,24 @@ public class DashboardServiceImpl implements DashboardService{
 		return banRequestRepo.count();
 	}
 
+	@Override
+	public long getTotalAccountGame(String name) {
+		Account account = accRepo.searchByName(name);
+		List<Game> games = gameRepo.searchByGameNameOrDeveloperName(account.getUsername());
+		System.out.println("------------------------------------------");
+		System.out.println(games.size());
+		System.out.println("------------------------------------------");
+		return games.size();
+	}
+
+	@Override
+	public double getAvgAccountGame(String name) {
+		Account account = accRepo.searchByName(name);
+		List<Game> games = gameRepo.searchByGameNameOrDeveloperName(account.getUsername());
+		double sum_rating=0;
+		for(Game game:games){
+			sum_rating=sum_rating+game.getRating();
+		}
+		return sum_rating/games.size();
+	}
 }

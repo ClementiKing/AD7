@@ -20,7 +20,10 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
 	@Query("SELECT acc FROM Account acc WHERE acc.username LIKE %:name% AND acc.role = User or acc.displayName LIKE %:name% AND acc.role = User")
 	public List<Account> SearchGamerByName(@Param("name") String name);
-	
+
+	@Query("SELECT acc FROM Account acc WHERE acc.username=:name")
+	public Account searchByName(@Param("name") String name);
+
 	@Query("SELECT acc FROM Account acc WHERE acc.username LIKE %:name% AND acc.role = Developer or acc.displayName LIKE %:name% AND acc.role = Developer")
 	public List<Account> SearchDeveloperByName(@Param("name") String name);
 }

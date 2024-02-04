@@ -5,14 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Game Details</title>
 	<!-- Include your CSS files here -->
-	<link rel="stylesheet" type="text/css" th:href="@{/detail_style.css}" />
-	<script>
-		// JavaScript function to display an alert box
-		function showMessage() {
-			alert("Your review has been send to developer!");
-		}
-
-	</script>
+			<link rel="stylesheet" type="text/css" th:href="@{/detail_style.css}" />
 </head>
 
 <body>
@@ -47,12 +40,12 @@
 		<div>
 			<form th:action="@{/approve}" method="post">
 				<input type="hidden" name="id" th:value="${game.game.id}" />
-				<button onclick="showMessage()" type="submit">Approve</button>
+				<button type="submit">Approve</button>
 			</form>
 
 			<form th:action="@{/reject}" method="post">
 				<input type="hidden" name="id" th:value="${game.game.id}" />
-				<button onclick="showMessage()" type="submit">Reject</button>
+				<button type="submit">Reject</button>
 			</form>
 
 			<a th:href="@{/games-pending-review}">Back</a>

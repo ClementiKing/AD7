@@ -2,7 +2,6 @@ package nus.iss.gdipsa.team7.model;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -91,16 +90,4 @@ public class User {
 		this.bio = bio;
 		this.publicity = publicity;
 	}
-	
-	@Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", dateCreated=" + dateCreated +
-                ", bio='" + bio + '\'' +
-                ", publicity=" + publicity +
-                ", followersIds=" + (followers != null ? followers.stream().map(User::getId).collect(Collectors.toList()) : null) +
-                ", notificationsIds=" + (notifications != null ? notifications.stream().map(Notification::getId).collect(Collectors.toList()) : null) +
-                '}';
-    }
 }

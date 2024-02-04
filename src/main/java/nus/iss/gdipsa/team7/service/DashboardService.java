@@ -8,4 +8,7 @@ public interface DashboardService {
     long getGamesPendingReview();
     long getUserReports();
 
+    long getTotalAccountGame(String name);
+
+    double getAvgAccountGame(String name);
 }
